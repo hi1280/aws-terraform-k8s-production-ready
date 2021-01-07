@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+patches:
+- path: front-end.yaml
+images:
+- name: 123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/front-end # 変更箇所
+  newTag: "8123599" # 変更箇所

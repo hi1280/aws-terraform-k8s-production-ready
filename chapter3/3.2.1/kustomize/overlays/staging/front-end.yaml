@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-end
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: front-end
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi

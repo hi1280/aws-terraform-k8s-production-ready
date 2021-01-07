@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: front-end
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/hi1280/aws-terraform-k8s-production-ready # 変更箇所
+    targetRevision: HEAD
+    path: chapter3/3.2.1/kustomize/overlays/production # 変更箇所
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sock-shop
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - CreateNamespace=true

@@ -1,0 +1,8 @@
+cloudProvider: aws
+awsRegion: ap-northeast-1
+
+autoDiscovery:
+  clusterName: eks-example
+
+image:
+  tag: v1.17.4

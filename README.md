@@ -1,0 +1,2 @@
+# aws-terraform-k8s-production-ready
+AWSとTerraformで学ぶプロダクションレディなKubernetesのサンプルコード

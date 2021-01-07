@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-end
+spec:
+  template:
+    spec:
+      containers:
+      - name: front-end
+        image: 123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/front-end # 変更箇所
+        ports:
+        - containerPort: 8079
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 10001
+          capabilities:
+            drop:
+              - all
+          readOnlyRootFilesystem: true
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-end
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8079
+    nodePort: 30001

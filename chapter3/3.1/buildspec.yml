@@ -1,0 +1,18 @@
+version: 0.2
+env:
+  variables:
+    REGISTRY_URI: "123456789012.dkr.ecr.ap-northeast-1.amazonaws.com" # 変更箇所
+    CONTAINER_NAME: front-end
+phases:
+  pre_build:
+    commands:
+      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+  build:
+    commands:
+      - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin $REGISTRY_URI
+      - aws ecr create-repository --repository-name ${CONTAINER_NAME} --region ap-northeast-1 || true
+      - REPOSITORY_URI=${REGISTRY_URI}/${CONTAINER_NAME}
+      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+      - docker tag $REPOSITORY_URI:$IMAGE_TAG $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - docker push $REPOSITORY_URI:latest
